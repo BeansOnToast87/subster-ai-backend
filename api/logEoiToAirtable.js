@@ -18,11 +18,11 @@ export default async function handler(req, res) {
     await base(process.env.AIRTABLE_TABLE_NAME).create([
       {
         fields: {
-  School: school_name,
-  Email: contact_email,
-  Interest: { name: interest_area || '' }
-},
-      },
+          School: school_name,
+          Email: contact_email,
+          Interest: interest_area || '' // ✅ Send as plain string
+        }
+      }
     ]);
 
     return res.status(200).json({ message: 'EOI logged successfully to Airtable' });
