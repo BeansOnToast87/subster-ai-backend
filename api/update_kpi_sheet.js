@@ -1,3 +1,5 @@
+// Trigger redeploy to flush old assets
+
 import { google } from 'googleapis';
 import path from 'path';
 import { promises as fs } from 'fs';
