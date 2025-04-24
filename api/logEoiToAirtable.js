@@ -18,10 +18,10 @@ export default async function handler(req, res) {
     await base(process.env.AIRTABLE_TABLE_NAME).create([
       {
         fields: {
-          School: school_name,
-          Interest: interest_area,
-          Email: contact_email,
-        },
+  School: school_name,
+  Email: contact_email,
+  Interest: { name: interest_area || '' }
+},
       },
     ]);
 
