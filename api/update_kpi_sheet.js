@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     const { date, metric, value } = req.body;
 
     const spreadsheetId = '1BCNlFFWWdeIPa_cfN8s21awGghV0KQf91UiAEIcGCBs';
-    const range = 'Sheet1!A:C';
+    const range = 'Raw Data!A:C';
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
