@@ -1,8 +1,4 @@
-// Trigger redeploy to flush old assets
-
 import { google } from 'googleapis';
-import path from 'path';
-import { promises as fs } from 'fs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -10,8 +6,10 @@ export default async function handler(req, res) {
   }
 
   try {
+    const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+
     const auth = new google.auth.GoogleAuth({
-      keyFile: path.join(process.cwd(), 'google-service-account.json'),
+      credentials,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
@@ -21,8 +19,7 @@ export default async function handler(req, res) {
     const { date, metric, value } = req.body;
 
     const spreadsheetId = '1BCNlFFWWdeIPa_cfN8s21awGghV0KQf91UiAEIcGCBs';
-  // <- We'll change this next
-    const range = 'Sheet1!A:C'; // This assumes your sheet has 3 columns: Date, Metric, Value
+    const range = 'Sheet1!A:C';
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
