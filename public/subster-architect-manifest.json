@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Subster Architect Actions",
+  "name_for_model": "subster_architect_actions",
+  "description_for_human": "Handle traction tracking, daily planning, and investor KPI updates for Subster’s AI Operating System.",
+  "description_for_model": "Manage Expression of Interest (EOI) logging, KPI sheet updates, and sending daily top priorities to Notion for the Subster AI System. Use the correct endpoint based on the task context.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://gist.githubusercontent.com/BeansOnToast87/dfe12ff4bef3449d57c01abfd1da6ab0/raw/a68d51839603d5d2f211c202ccb6dc327b726383/subster-architect-openapi.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://static.wixstatic.com/media/599c14_9413bbc245b64947953aa1570379a970~mv2.jpg/v1/fill/w_841,h_364,al_c,q_80,enc_avif,quality_auto/SubsterLogo.jpg",
+  "contact_email": "team@subster.app",
+  "legal_info_url": "https://subster.app/legal"
+}
