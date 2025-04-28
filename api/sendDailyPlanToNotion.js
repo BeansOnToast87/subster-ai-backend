@@ -1,4 +1,7 @@
-const { Client } = require("@notionhq/client");
+require('dotenv').config();
+const { Client } = require('@notionhq/client');
+
+const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -8,42 +11,42 @@ export default async function handler(req, res) {
   const { date, priorities } = req.body;
 
   if (!date || !priorities || !Array.isArray(priorities)) {
-    return res.status(400).json({ message: 'Missing or invalid date or priorities' });
+    return res.status(400).json({ message: 'Missing or invalid fields' });
   }
 
   try {
-    const notion = new Client({ auth: process.env.NOTION_TOKEN });
-    const databaseId = process.env.NOTION_DATABASE_ID;
-
-    const results = [];
-
-    for (const task of priorities) {
-      const response = await notion.pages.create({
-        parent: { database_id: databaseId },
-        properties: {
-          Name: {
-            title: [
-              {
-                text: {
-                  content: task,
-                },
+    await notion.pages.create({
+      parent: { database_id: '1e1b5b68a0c5808990bef57ba744e2e3' },
+      properties: {
+        Title: {
+          title: [
+            {
+              text: {
+                content: `Plan for ${date}`,
               },
-            ],
-          },
-          Date: {
-            date: {
-              start: date,
             },
+          ],
+        },
+        Date: {
+          date: {
+            start: date,
           },
         },
-      });
+        Priorities: {
+          rich_text: [
+            {
+              text: {
+                content: priorities.join(', '),
+              },
+            },
+          ],
+        },
+      },
+    });
 
-      results.push(response.id);
-    }
-
-    res.status(200).json({ message: 'Tasks sent to Notion', results });
+    return res.status(200).json({ message: 'Daily plan logged to Notion successfully' });
   } catch (error) {
-    console.error('Error sending to Notion:', error.message);
-    res.status(500).json({ error: error.message });
+    console.error('Error logging to Notion:', error);
+    return res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 }
